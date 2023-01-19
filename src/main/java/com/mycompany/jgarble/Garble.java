@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.awt.Color;
 
 public class Garble {
+
+    //initializes all the variables
     public String word;
     private boolean gameEnd;
     private ArrayList<String> guessWords;
@@ -37,8 +39,9 @@ public class Garble {
     }
 
     /**
-     * 
-     * @param s
+     * checks if the guess word is valid
+     *
+     * @param s the word entered by the player
      * @return
      */
     private boolean validGuess(String s) {
@@ -54,6 +57,13 @@ public class Garble {
         return true;
     }
 
+    /**
+     * get the color for each letter. Green for right color, yellow for misplaced and grey for excluded letters
+     *
+     * @param index index of the letter of the word
+     * @param c the letter being checked
+     * @return
+     */
     private Color getColor(int index, String c) {
         if (word.substring(index, index + 1).equals(c)) {
             if (!correctLetters.contains(c)) {
@@ -77,8 +87,8 @@ public class Garble {
     }
 
     /**
-     * 
-     * @param s
+     * Method for taking in a player's guess for the word and updating the game state accordingly
+     * @param s - the player's guess
      */
     public void takeGuess(String s) {
         colorOfLetters.clear();
@@ -107,24 +117,24 @@ public class Garble {
     }
 
     /**
-     * 
-     * @return
+     * get the word
+     * @return word the word being returned
      */
     public String getWord() {
         return word;
     }
 
     /**
-     * 
-     * @return
+     * get the arraylist of color of letters
+     * @return colorOfLetters the arraylist of colors
      */
     public ArrayList<Color> getColors() {
         return colorOfLetters;
     }
 
     /**
-     * 
-     * @return
+     * ends the game
+     * @return gameEnd
      */
     public boolean end() {
         return gameEnd;
