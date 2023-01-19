@@ -6,6 +6,7 @@ package com.mycompany.jgarble;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.io.InputStream;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      * @throws java.lang.Exception
      */
     public JGarble_Interface() throws Exception{
-        this.garbleGame = new Garble(WordReader.randomWord("src/main/resources/wordBank.txt"));
+        this.garbleGame = new Garble(WordReader.randomWord());
         initComponents();
         initList();
         initLetterList();
@@ -1352,34 +1353,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
 
     private void sideButtonStatsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideButtonStatsMousePressed
         // TODO add your handling code here:
-        int gamesPlayedHistory = 0;
-        int totalGameWins = 0;
-        int currWinStreak = 0;
-        int longestWinStreak = 0;
-        int winPercentage = 0;
-        
-        try {
-            int[] wordlePlayedHistory = StatsUpdater.getStats("src/main/resources/statsHistory.txt");
-            gamesPlayedHistory = wordlePlayedHistory[0];
-            totalGameWins = wordlePlayedHistory[1];
-            currWinStreak = wordlePlayedHistory[3];
-            longestWinStreak = wordlePlayedHistory[2];
-            winPercentage = (int) ((double) totalGameWins/ gamesPlayedHistory) * 100;
-        } catch (Exception ex) {
-            Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        totalGamesPlayedLabel.setText(String.valueOf(gamesPlayedHistory));
-        totalGameWinsLabel.setText(String.valueOf(totalGameWins));
-        longestWinStreakLabel.setText(String.valueOf(longestWinStreak));
-        currWinStreakLabel.setText(String.valueOf(currWinStreak));
-        winPercentageLabel.setText(String.valueOf(winPercentage));
-        
-        setColor(sideButtonStats);
-        sideBarIndicator2.setOpaque(true);
-        resetColor(new JPanel[]{sideButtonGame,sideButtonSettings}, new JPanel[]{sideBarIndicator1, sideBarIndicator3});
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "statsPanel");
+        displayStats();
     }//GEN-LAST:event_sideButtonStatsMousePressed
 
     private void sideButtonSettingsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideButtonSettingsMousePressed
@@ -1410,6 +1384,37 @@ public class JGarble_Interface extends javax.swing.JFrame{
             enteredLetter = "";
         }
         if(garbleInformationBar.getText().length() != 0) garbleInformationBar.setText("");
+    }
+    
+    private void displayStats(){
+        int gamesPlayedHistory = 0;
+        int totalGameWins = 0;
+        int currWinStreak = 0;
+        int longestWinStreak = 0;
+        int winPercentage = 0;
+        
+        try {
+            int[] wordlePlayedHistory = StatsUpdater.getStats();
+            gamesPlayedHistory = wordlePlayedHistory[0];
+            totalGameWins = wordlePlayedHistory[1];
+            currWinStreak = wordlePlayedHistory[3];
+            longestWinStreak = wordlePlayedHistory[2];
+            winPercentage = wordlePlayedHistory[4];
+        } catch (Exception ex) {
+            Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        totalGamesPlayedLabel.setText(String.valueOf(gamesPlayedHistory));
+        totalGameWinsLabel.setText(String.valueOf(totalGameWins));
+        longestWinStreakLabel.setText(String.valueOf(longestWinStreak));
+        currWinStreakLabel.setText(String.valueOf(currWinStreak));
+        winPercentageLabel.setText(String.valueOf(winPercentage));
+        
+        setColor(sideButtonStats);
+        sideBarIndicator2.setOpaque(true);
+        resetColor(new JPanel[]{sideButtonGame,sideButtonSettings}, new JPanel[]{sideBarIndicator1, sideBarIndicator3});
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, "statsPanel");
     }
     
     
@@ -1628,7 +1633,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
             enteredLetters = enteredLetters.substring(0,6);
             
             try {
-                if(!WordReader.validWord(enteredLetters.toLowerCase(), "src/main/resources/wordBank.txt") && !userOverride){
+                if(!WordReader.validWord(enteredLetters.toLowerCase()) && !userOverride){
                     enteredLetters = "";
                     letterCount = 0;
                     for(int i = 0; i < 6; i++) {
@@ -1664,7 +1669,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
                 garbleInformationBar.setForeground(new Color(83,141,78));
                 garbleInformationBar.setText("You won! Please close the app and reopen if you want to try again.");
                 try {
-                    StatsUpdater.win("src/main/resources/statsHistory.txt");
+                    StatsUpdater.win();
                 } catch (Exception ex) {
                     Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1679,7 +1684,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
             garbleInformationBar.setForeground(new Color(181, 159, 59));
             garbleInformationBar.setText("It looks like you lost :( the word is " + Garble.staticWord);
             try {
-                StatsUpdater.lose("src/main/resources/wordBank.txt");
+                StatsUpdater.lose();
             } catch (Exception ex) {
                 Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1706,8 +1711,14 @@ public class JGarble_Interface extends javax.swing.JFrame{
     }//GEN-LAST:event_setWordButtonMousePressed
 
     private void resetButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMousePressed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            StatsUpdater.deleteBrowserHistory();
+        } catch (Exception ex) {
+            Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        displayStats();
     }//GEN-LAST:event_resetButtonMousePressed
 
     /**

@@ -1,20 +1,20 @@
 package com.mycompany.jgarble;
 
+
 import java.io.*;
 import java.util.*;
-import java.nio.file.*;
 
 public class WordReader {
     public static void main(String[] args) throws Exception {
     }
 
-    public static String randomWord(String route) throws Exception {
-        List<String> l;
-        try {
-            l = Files.readAllLines(Paths.get(route));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+    public static String randomWord() throws Exception {
+        InputStream in = WordReader.class.getClassLoader().getResourceAsStream("wordBank.txt");
+        List<String> l = new ArrayList<>();
+        try (Scanner scanner = new Scanner(in)) {
+            while (scanner.hasNextLine()) {
+                l.add(scanner.nextLine());
+            }
         }
         Random random = new Random();
         return l.get(random.nextInt(l.size()));
@@ -27,18 +27,15 @@ public class WordReader {
      * @return
      * @throws Exception
      */
-    public static boolean validWord(String word, String fileName) throws Exception {
-        File file = new File(fileName);
-        Scanner scanner = new Scanner(file);
-        String Currentline;
-        while (scanner.hasNextLine()) {
-            Currentline = scanner.nextLine();
-            if (Currentline.equals(word)) {
-                scanner.close();
-                return true;
+    public static boolean validWord(String word) throws Exception {
+        InputStream in = WordReader.class.getClassLoader().getResourceAsStream("wordBank.txt");
+        try (Scanner scanner = new Scanner(in)) {
+            while (scanner.hasNextLine()) {
+                if (scanner.nextLine().equals(word)) {
+                    return true;
+                }
             }
         }
-        scanner.close();
         return false;
     }
 }
