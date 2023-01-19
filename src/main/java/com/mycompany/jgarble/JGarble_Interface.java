@@ -1683,6 +1683,8 @@ public class JGarble_Interface extends javax.swing.JFrame{
         if(rowCount == 6 && !Garble.hasGameEnded) {
             garbleInformationBar.setForeground(new Color(181, 159, 59));
             garbleInformationBar.setText("It looks like you lost :( the word is " + Garble.staticWord);
+            
+            
             try {
                 StatsUpdater.lose();
             } catch (Exception ex) {

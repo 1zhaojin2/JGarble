@@ -33,6 +33,7 @@ public class Garble {
     
     public void setWord(String s) {
         word = s;
+        staticWord = s;
     }
 
     /**
