@@ -1352,14 +1352,15 @@ public class JGarble_Interface extends javax.swing.JFrame{
 
     private void sideButtonStatsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideButtonStatsMousePressed
         // TODO add your handling code here:
-        int gamesPlayedHistory = StatsUpdater.gamesPlayed("src/main/resources/wordBank.txt");
+        int gamesPlayedHistory = 0;
         int totalGameWins = 0;
         int currWinStreak = 0;
         int longestWinStreak = 0;
         int winPercentage = 0;
         
         try {
-            int[] wordlePlayedHistory = StatsUpdater.getStats("src/main/resources/wordBank.txt");
+            int[] wordlePlayedHistory = StatsUpdater.getStats("src/main/resources/statsHistory.txt");
+            gamesPlayedHistory = wordlePlayedHistory[0];
             totalGameWins = wordlePlayedHistory[1];
             currWinStreak = wordlePlayedHistory[3];
             longestWinStreak = wordlePlayedHistory[2];
