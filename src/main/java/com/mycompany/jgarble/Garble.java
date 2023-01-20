@@ -25,7 +25,7 @@ public class Garble {
         this.word = word;
         guessedLetters = new ArrayList<String>();
         colorOfLetters = new ArrayList<Color>();
-        gameEnd = true;
+        gameEnd = false;
         numOfGuesses = 0;
         staticWord = word;
     }
@@ -57,6 +57,8 @@ public class Garble {
     private Color[] getColor(String guess) {
 
         Color[] color = new Color[word.length()];
+        
+        guessedLetters.clear();
 
         for (int i = 0; i < guess.length(); i++) {
             if (guess.substring(i, i + 1).equals(word.substring(i, i + 1))) {
@@ -100,7 +102,7 @@ public class Garble {
             colorOfLetters = new ArrayList<Color>(Arrays.asList(getColor(s)));
             numOfGuesses++;
 
-            if (numOfGuesses == 6 || s.equals(word)) {
+            if (s.equals(word)) {
                 gameEnd = true;
                 hasGameEnded = true;
             }
