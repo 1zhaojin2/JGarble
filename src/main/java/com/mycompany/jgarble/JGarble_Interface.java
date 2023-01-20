@@ -1365,6 +1365,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
         resetColor(new JPanel[]{sideButtonStats,sideButtonSettings}, new JPanel[]{sideBarIndicator2, sideBarIndicator3});
         CardLayout card = (CardLayout)mainPanel.getLayout();
         card.show(mainPanel, "gamePanel");
+        settingsPanelIndicatorLabel.setText("");
     }//GEN-LAST:event_sideButtonGameMousePressed
 
 
@@ -1375,6 +1376,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
     private void sideButtonStatsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sideButtonStatsMousePressed
         // TODO add your handling code here:
         displayStats();
+        settingsPanelIndicatorLabel.setText("");
     }//GEN-LAST:event_sideButtonStatsMousePressed
 
     /**
@@ -1449,6 +1451,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_qMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_qMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "Q";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1461,6 +1464,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_wMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_wMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "W";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1473,6 +1477,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_eMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_eMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "E";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1485,6 +1490,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_rMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_rMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "R";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1497,6 +1503,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_tMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_tMousePressed
         // TODO add your handling code here:'
+        if(Garble.hasGameEnded) return;
         String letter = "T";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1509,6 +1516,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_yMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_yMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "Y";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1521,6 +1529,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_uMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_uMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "U";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1533,6 +1542,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_iMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_iMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "I";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1545,6 +1555,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_oMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_oMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "O";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1557,6 +1568,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_pMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_pMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "P";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1569,6 +1581,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_aMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_aMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "A";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1581,6 +1594,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_sMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_sMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "S";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1593,6 +1607,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_dMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_dMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "D";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1605,6 +1620,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_fMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_fMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "F";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1617,6 +1633,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_gMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_gMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "G";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1629,6 +1646,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_hMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_hMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "H";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1641,6 +1659,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_jMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_jMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "J";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1653,6 +1672,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_kMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_kMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "K";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1665,6 +1685,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_lMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_lMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "L";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1677,6 +1698,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_zMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_zMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "Z";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1689,6 +1711,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_xMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_xMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "X";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1701,6 +1724,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_cMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_cMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "C";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1713,6 +1737,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_vMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_vMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "V";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1725,6 +1750,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_bMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_bMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "B";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1737,6 +1763,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_nMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_nMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "N";
         enteredLetters += letter;
         enteredLetter = letter;
@@ -1749,6 +1776,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
      */
     private void key_mMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_key_mMousePressed
         // TODO add your handling code here:
+        if(Garble.hasGameEnded) return;
         String letter = "M";
         enteredLetters += letter; 
         enteredLetter = letter;
@@ -1800,7 +1828,7 @@ public class JGarble_Interface extends javax.swing.JFrame{
                 }
             }
 
-            //checks if the game has ended and the player has won. If
+            //checks if the game has ended and the player has won.
             if(Garble.hasGameEnded) {
                 garbleInformationBar.setForeground(new Color(83,141,78));
                 garbleInformationBar.setText("You won! Please close the app and reopen if you want to try again.");

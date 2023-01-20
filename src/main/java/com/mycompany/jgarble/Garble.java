@@ -1,20 +1,19 @@
 package com.mycompany.jgarble;
-import java.util.ArrayList;
+
+import java.util.*;
 import java.awt.Color;
 
 public class Garble {
 
-    //initializes all the variables
+    // initializes all the variables
     public String word;
+    private int numOfGuesses;
     private boolean gameEnd;
-    private ArrayList<String> guessWords;
-    public static ArrayList<String> correctLetters;
-    public static ArrayList<String> misplacedLetters;
-    public static ArrayList<String> excludedLetters;
+    private ArrayList<String> guessedLetters;
     private ArrayList<Color> colorOfLetters;
-    
+
     public static String staticWord = "";
-    
+
     public static boolean hasGameEnded = false;
 
     /**
@@ -24,15 +23,13 @@ public class Garble {
      */
     public Garble(String word) {
         this.word = word;
-        gameEnd = false;
-        guessWords = new ArrayList<String>();
+        guessedLetters = new ArrayList<String>();
         colorOfLetters = new ArrayList<Color>();
-        correctLetters = new ArrayList<String>();
-        misplacedLetters = new ArrayList<String>();
-        excludedLetters = new ArrayList<String>();
+        gameEnd = true;
+        numOfGuesses = 0;
         staticWord = word;
     }
-    
+
     public void setWord(String s) {
         word = s;
         staticWord = s;
@@ -57,51 +54,53 @@ public class Garble {
         return true;
     }
 
-    /**
-     * get the color for each letter. Green for right color, yellow for misplaced and grey for excluded letters
-     *
-     * @param index index of the letter of the word
-     * @param c the letter being checked
-     * @return
-     */
-    private Color getColor(int index, String c) {
-        if (word.substring(index, index + 1).equals(c)) {
-            if (!correctLetters.contains(c)) {
-                correctLetters.add(c);
+    private Color[] getColor(String guess) {
+
+        Color[] color = new Color[word.length()];
+
+        for (int i = 0; i < guess.length(); i++) {
+            if (guess.substring(i, i + 1).equals(word.substring(i, i + 1))) {
+                color[i] = new Color(83, 141, 78);
+                guessedLetters.add(guess.substring(i, i + 1));
             }
-            if (misplacedLetters.contains(c)) {
-                misplacedLetters.remove(c);
+        }
+
+        for (int j = 0; j < guess.length(); j++) {
+            String c = guess.substring(j, j + 1);
+            char cChecker = guess.charAt(j);
+            if (word.contains(guess.substring(j, j + 1)) && color[j] == null) {
+                if (guessedLetters.stream().filter(ch -> ch.equals(c)).count() < word.chars()
+                        .filter(ch -> ch == cChecker).count()) {
+                    color[j] = new Color(181, 159, 59);
+                    guessedLetters.add(guess.substring(j, j + 1));
+                } else {
+                    color[j] = new Color(94, 94, 98);
+                }
+                guessedLetters.add(guess.substring(j, j + 1));
             }
-            return new Color(83,141,78);
         }
-        else if (word.contains(c)) {
-            if (!misplacedLetters.contains(c)) {
-                misplacedLetters.add(c);
+
+        for (int k = 0; k < guess.length(); k++) {
+            if (!word.contains(guess.substring(k, k + 1))) {
+                color[k] = new Color(94, 94, 98);
             }
-            return new Color(181, 159, 59);
         }
-        if (excludedLetters.contains(c)) {
-            excludedLetters.add(c);
-        }
-        return new Color(94, 94, 98);
+
+        return color;
     }
 
     /**
-     * Method for taking in a player's guess for the word and updating the game state accordingly
+     * Method for taking in a player's guess for the word and updating the game
+     * state accordingly
+     * 
      * @param s - the player's guess
      */
     public void takeGuess(String s) {
-        colorOfLetters.clear();
+        if (validGuess(s)) {
+            colorOfLetters = new ArrayList<Color>(Arrays.asList(getColor(s)));
+            numOfGuesses++;
 
-        if (!gameEnd) {
-            if (validGuess(s)) {
-                guessWords.add(s);
-
-                for (int i = 0; i < word.length(); i++) {
-                    colorOfLetters.add(getColor(i, s.substring(i, i + 1)));
-                }
-            }
-            if (s.equals(word)) {
+            if (numOfGuesses == 6 || s.equals(word)) {
                 gameEnd = true;
                 hasGameEnded = true;
             }
@@ -109,23 +108,8 @@ public class Garble {
     }
 
     /**
-     * 
-     * @return
-     */
-    public ArrayList<String> getGuess() {
-        return guessWords;
-    }
-
-    /**
-     * get the word
-     * @return word the word being returned
-     */
-    public String getWord() {
-        return word;
-    }
-
-    /**
      * get the arraylist of color of letters
+     * 
      * @return colorOfLetters the arraylist of colors
      */
     public ArrayList<Color> getColors() {
@@ -133,10 +117,10 @@ public class Garble {
     }
 
     /**
-     * ends the game
-     * @return gameEnd
+     * 
+     * @return
      */
-    public boolean end() {
+    public boolean hasGameEnded() {
         return gameEnd;
     }
 }
