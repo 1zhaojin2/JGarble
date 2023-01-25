@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Main interface of Garble and runs the entire game
@@ -31,6 +33,113 @@ public class JGarble_Interface extends javax.swing.JFrame{
         initComponents();
         initList();
         initLetterList();
+
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(Garble.hasGameEnded) return;
+                
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if(letterCount > 0) {
+                    enteredLetters = enteredLetters.substring(0, enteredLetters.length()-1);
+                    letterCount--;
+                    myLabels[rowCount*6 + letterCount].setText("");
+                    }
+                } else if (Character.isLetter(e.getKeyChar())) {
+                    String letter = String.valueOf(e.getKeyChar()).toUpperCase();
+                    enteredLetters += letter;
+                    enteredLetter = letter;
+                    displayLetter();
+                } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    // check if there are indeed 6 letters in the current row. If there are not then skip
+                    if(letterCount >= 6) {
+                        enteredLetters = enteredLetters.substring(0,6);
+
+                        //check if the entered letters are a valid word, if it is not a valid word, and it is not a user overwritten word, then skip the entire code
+                        try {
+                            if(!WordReader.validWord(enteredLetters.toLowerCase()) && !userOverride){
+                                enteredLetters = "";
+                                letterCount = 0;
+                                for(int i = 0; i < 6; i++) {
+                                    myLabels[rowCount*6+i].setText("");
+                                }
+
+                                garbleInformationBar.setForeground(new Color(135, 37, 61));
+                                garbleInformationBar.setText("Not in Word List!");
+                                return;
+                            }
+                        } catch (Exception ex) {
+                            Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        //grabs color from Garble class to display on the
+                        garbleGame.takeGuess(enteredLetters.toLowerCase());
+                        ArrayList<Color> colors = garbleGame.getColors();
+
+                        // apply colors to both the display area and the keyboard
+                        for(int i = 0; i < 6; i++) {
+                            int currBox = (rowCount)*6 + i;
+                            myLabels[currBox].setBackground(colors.get(i));
+                            int currLetterIndex = allLetters.indexOf(myLabels[currBox].getText());
+                            Color customGreen = new Color(83,141,78);
+                            Color customYellow = new Color(94, 94, 98);
+                            if(myLetters[currLetterIndex].getBackground().getRGB() != customGreen.getRGB()) {
+                                if(myLetters[currLetterIndex].getBackground().getRGB() != customYellow.getRGB()) {
+                                    myLetters[currLetterIndex].setBackground(colors.get(i));
+                                    myLetters[currLetterIndex].setOpaque(true);
+                                    myLetters[currLetterIndex].setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                                }
+                            }
+                        }
+
+                        //checks if the game has ended and the player has won.
+                        if(Garble.hasGameEnded) {
+                            garbleInformationBar.setForeground(new Color(83,141,78));
+                            garbleInformationBar.setText("You won! Please close the app and reopen if you want to try again.");
+                            try {
+                                StatsUpdater.win();
+                            } catch (Exception ex) {
+                                Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+
+                        // the following codes are preparing for the next user entry. It resets the pointer and move it to the next row, and clearing previously used variables
+
+                        // switch to the next row
+                        rowCount++;
+
+                        // reset the entered letters string
+                        enteredLetters = "";
+
+                        // reset the letter count to 0
+                        letterCount = 0;
+                    }
+
+                    //checks if the player has lost the game
+                    if(rowCount == 6 && !Garble.hasGameEnded) {
+                        garbleInformationBar.setForeground(new Color(181, 159, 59));
+                        garbleInformationBar.setText("It looks like you lost :( the word is " + Garble.staticWord);
+
+
+                        try {
+                            StatsUpdater.lose();
+                        } catch (Exception ex) {
+                            Logger.getLogger(JGarble_Interface.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // not used
+            }
+        });
+        setFocusable(true);
     }
 
     /**
@@ -1444,6 +1553,16 @@ public class JGarble_Interface extends javax.swing.JFrame{
         CardLayout card = (CardLayout)mainPanel.getLayout();
         card.show(mainPanel, "statsPanel");
     }
+    
+    public void keyPressed(KeyEvent e) {
+        if(Garble.hasGameEnded) return;
+        if (Character.isLetter(e.getKeyChar())) {
+            String letter = String.valueOf(e.getKeyChar()).toUpperCase();
+            enteredLetters += letter;
+            enteredLetter = letter;
+            displayLetter();
+        }
+    }
 
     /**
      * Triggered when the on-screen key "Q" is pressed
@@ -1820,11 +1939,13 @@ public class JGarble_Interface extends javax.swing.JFrame{
                 myLabels[currBox].setBackground(colors.get(i));
                 int currLetterIndex = allLetters.indexOf(myLabels[currBox].getText());
                 Color customGreen = new Color(83,141,78);
+                Color customYellow = new Color(94, 94, 98);
                 if(myLetters[currLetterIndex].getBackground().getRGB() != customGreen.getRGB()) {
-                    myLetters[currLetterIndex].setBackground(colors.get(i));
-                    myLetters[currLetterIndex].setOpaque(true);
-                    myLetters[currLetterIndex].setBorder(javax.swing.BorderFactory.createEmptyBorder());
-                    
+                    if(myLetters[currLetterIndex].getBackground().getRGB() != customYellow.getRGB()) {
+                        myLetters[currLetterIndex].setBackground(colors.get(i));
+                        myLetters[currLetterIndex].setOpaque(true);
+                        myLetters[currLetterIndex].setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                    }
                 }
             }
 
